@@ -9,10 +9,7 @@ const ClothesModel = require('./clothes');
 const Food = FoodModel(sequelize, Sequelize);
 const Clothes = ClothesModel(sequelize, Sequelize);
 
-// Define any associations between models (if needed)
-// Example: Food.belongsTo(Clothes);
 
-// Export the models
 module.exports = {
   Food,
   Clothes,

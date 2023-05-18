@@ -1,14 +1,14 @@
 const express = require('express');
 const app = express();
-const foodRoutes = require('./routes/foodRoutes');
-const clothesRoutes = require('./routes/clothesRoutes');
+const foodRoutes = require('./routes/food');
+const clothesRoutes = require('./routes/clothes');
 
 app.use(express.json());
 
-// Mount the foodRoutes module at the /food path
+// Mount the foodRoutes - /food path
 app.use('/food', foodRoutes);
 
-// Mount the clothesRoutes module at the /clothes path
+// Mount the clothesRoutes module-  /clothes path
 app.use('/clothes', clothesRoutes);
 
 // Handle 404 - Route not found
@@ -27,3 +27,5 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+module.exports = app;

@@ -1,8 +1,10 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const router = express.Router();
 const Food = require('../models/food');
 
-// Create a record
+router.use(bodyParser.json());
+
 router.post('/', async (req, res) => {
   try {
     const { name, description, price } = req.body;
@@ -13,7 +15,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Get all records
 router.get('/', async (req, res) => {
   try {
     const foods = await Food.findAll();
@@ -23,7 +24,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get one record
 router.get('/:id', async (req, res) => {
   try {
     const food = await Food.findByPk(req.params.id);
@@ -37,7 +37,6 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Update a record
 router.put('/:id', async (req, res) => {
   try {
     const { name, description, price } = req.body;
@@ -55,7 +54,6 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// Delete a record
 router.delete('/:id', async (req, res) => {
   try {
     const deletedRowsCount = await Food.destroy({ where: { id: req.params.id } });

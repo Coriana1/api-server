@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('./server');
+const app = require('../src/server');
 
 describe('Test the server routes', () => {
   it('should respond with 404 for an unknown route', async () => {
