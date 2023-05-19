@@ -1,40 +1,20 @@
-const express = require('express');
-const { Sequelize } = require('sequelize');
-const app = express();
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const foodRoutes = require('./src/routes/food');
-const clothesRoutes = require('./src/routes/clothes');
-const NotFoundHandler = require('./src/error-handlers/404');
-const ErrorHandler = require('./src/error-handlers/500');
+'use strict';
 
-const DATABASE_URL = process.env.NODE_ENV === 'test' ? 'sqlite:memory:' :process.env.DATABASE_URL;
+require ('dotenv').config();
 
-const sequelize = new Sequelize({
-  dialect: 'postgres', 
-});
+const { sequelize } = require('./src/models');
+const { start } = require('./src/server');
 
-app.use(cors());
-app.use(bodyParser.json());
+const PORT = process.env.PORT || 3000;
 
-app.use('/food', foodRoutes);
-app.use('/clothes', clothesRoutes);
-
-app.use(NotFoundHandler);
-
-app.use(ErrorHandler);
-
-sequelize
-  .authenticate()
+sequelize.sync()
   .then(() => {
     console.log('Connection to the database has been established successfully.');
+    start (PORT);
   })
   .catch((error) => {
     console.error('Unable to connect to the database:', error);
   });
 
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
-});
+

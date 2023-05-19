@@ -1,8 +1,7 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:'); //refer to demo 
+'use strict';
 
 
-const Clothes = sequelize.define('Clothes', {
+const Clothes = (sequelize, DataTypes) => sequelize.define('Clothes', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
