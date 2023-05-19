@@ -6,9 +6,9 @@ const cors = require('cors');
 const foodRoutes = require('./src/routes/food');
 const clothesRoutes = require('./src/routes/clothes');
 const { NotFoundHandler, ErrorHandler } = require('./src/error-handler');
-
-// Sequelize instance
 const sequelize = new Sequelize(require('./config/config.json'));
+
+//Modified the order above to allow for a more consistent flow just for organization
 
 // Middleware
 app.use(cors());
@@ -29,12 +29,13 @@ sequelize
   .authenticate()
   .then(() => {
     console.log('Connection to the database has been established successfully.');
-    // Sync database models if needed
-    // sequelize.sync();
   })
   .catch((error) => {
     console.error('Unable to connect to the database:', error);
   });
+
+// Sync database models if needed
+// sequelize.sync();
 
 // Server
 const port = process.env.PORT || 3000;
