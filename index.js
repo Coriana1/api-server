@@ -1,43 +1,20 @@
-const express = require('express');
-const { Sequelize } = require('sequelize');
-const app = express();
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const foodRoutes = require('./src/routes/food');
-const clothesRoutes = require('./src/routes/clothes');
-const { NotFoundHandler, ErrorHandler } = require('./src/error-handler');
+'use strict';
 
-// Sequelize instance
-const sequelize = new Sequelize(require('./config/config.json'));
+require ('dotenv').config();
 
-// Middleware
-app.use(cors());
-app.use(bodyParser.json());
+const { sequelize } = require('./src/models');
+const { start } = require('./src/server');
 
-// Routes
-app.use('/food', foodRoutes);
-app.use('/clothes', clothesRoutes);
+const PORT = process.env.PORT || 3000;
 
-// 404 Handler
-app.use(NotFoundHandler);
-
-// Error Handler
-app.use(ErrorHandler);
-
-// Database connection
-sequelize
-  .authenticate()
+sequelize.sync()
   .then(() => {
     console.log('Connection to the database has been established successfully.');
-    // Sync database models if needed
-    // sequelize.sync();
+    start (PORT);
   })
   .catch((error) => {
     console.error('Unable to connect to the database:', error);
   });
 
-// Server
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
-});
+
+

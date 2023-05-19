@@ -1,30 +1,28 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const router = express.Router();
 const Food = require('../models/food');
 
-// Create a record
-router.post('/', async (req, res) => {
+router.post('/food', async (req, res) => {
   try {
     const { name, description, price } = req.body;
     const food = await Food.create({ name, description, price });
-    res.status(201).json(food);
+    res.status(200).send(food);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to create the record' });
+    res.status(500).send({ error: 'Failed to create the record' });
   }
 });
 
-// Get all records
-router.get('/', async (req, res) => {
+router.get('/food', async (req, res) => {
   try {
     const foods = await Food.findAll();
-    res.status(200).json(foods);
+    res.status(200).send(foods);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch the records' });
+    res.status(500).send({ error: 'Failed to fetch the records' });//change the rest to .send
   }
 });
 
-// Get one record
-router.get('/:id', async (req, res) => {
+router.get('/food/:id', async (req, res) => {
   try {
     const food = await Food.findByPk(req.params.id);
     if (food) {
@@ -37,8 +35,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Update a record
-router.put('/:id', async (req, res) => {
+router.put('/food/:id', async (req, res) => {
   try {
     const { name, description, price } = req.body;
     const updatedFood = await Food.update({ name, description, price }, {
@@ -55,8 +52,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// Delete a record
-router.delete('/:id', async (req, res) => {
+router.delete('/food/:id', async (req, res) => {
   try {
     const deletedRowsCount = await Food.destroy({ where: { id: req.params.id } });
     if (deletedRowsCount === 0) {
