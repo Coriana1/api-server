@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { clothes } = require('../models');
 
-
 const app = express();
 app.use(express.json);
 
