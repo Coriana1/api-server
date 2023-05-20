@@ -1,7 +1,10 @@
 'use strict';
 
 const { Sequelize, DataTypes } = require('sequelize');
-const customer = require('./customer');
+const food = require('./food');
+const clothes = require('./clothes');
+const Collection = require('./collection');
+// const customer = require('./customer');
 // const order = require('./order');
 // const Collection = require('./collection');
 
@@ -12,19 +15,23 @@ const DATABASE_URL = process.env.NODE_ENV === 'test' ? 'sqlite::memory:' : proce
 const sequelize = new Sequelize(DATABASE_URL);
 
 // Import the models
-const FoodModel = require('./food');
-const ClothesModel = require('./clothes');
+// const FoodModel = require('./food');
+// const ClothesModel = require('./clothes');
 
 // Initialize the models
-const Food = FoodModel(sequelize, DataTypes); //lowercase 
-const Clothes = ClothesModel(sequelize, DataTypes);
+const FoodModel = food(sequelize, DataTypes); //lowercase 
+const ClothesModel = clothes(sequelize, DataTypes);
+
+//code for collection
+FoodModel.hasMany(ClothesModel);
+ClothesModel.belongsTo(FoodModel);
 
 //connecting database
 
 
 module.exports = {
-  Food,
-  Clothes,
+  clothes: new Collection(ClothesModel),
+  food: new Collection(FoodModel),
   sequelize,
 };
 
