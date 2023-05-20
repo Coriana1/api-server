@@ -12,13 +12,23 @@ app.use(cors());
 app.use(express.json());
 
 // Mount the foodRoutes - /food path
+// app.use('/food', foodRoutes);
 app.use(foodRoutes);
 
 // Mount the clothesRoutes module-  /clothes path
-app.use('/clothes', clothesRoutes);
+// app.use('/clothes', clothesRoutes);
+app.use(clothesRoutes);
 
+app.get('/', (req, res, next) => {
+  res.status(200).send('SERVER HIT');
+});
+
+app.get('/bad', (req, res, next) => {
+  res.status(404).send('404 NOT FOUND');
+  next('Bad Path');
+});
 // Handle 404 - Route not found
-app.use(NotFoundHandler);
+app.use('*',NotFoundHandler);
 
 app.use(ErrorHandler);
 

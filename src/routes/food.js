@@ -1,30 +1,28 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const router = express.Router();
-const Food = require('../models/food');
+// const Food = require('../models/food');
+const { food } = require('../models');
 
 router.post('/food', async (req, res) => {
   try {
     const { name, description, price } = req.body;
-    const food = await Food.create({ name, description, price });
+    const food = await food.create({ name, description, price });
     res.status(200).send(food);
   } catch (error) {
     res.status(500).send({ error: 'Failed to create the record' });
   }
 });
 
-router.get('/food', async (req, res) => {
-  try {
-    const foods = await Food.findAll();
-    res.status(200).send(foods);
-  } catch (error) {
-    res.status(500).send({ error: 'Failed to fetch the records' });//change the rest to .send
-  }
+// get all records
+router.get('/food', async (req, res, next) => {
+  let foods = await food.findAll();
+  res.status(200).send(foods);
 });
 
 router.get('/food/:id', async (req, res) => {
   try {
-    const food = await Food.findByPk(req.params.id);
+    const food = await food.findByPk(req.params.id);
     if (food) {
       res.status(200).json(food);
     } else {
@@ -38,7 +36,7 @@ router.get('/food/:id', async (req, res) => {
 router.put('/food/:id', async (req, res) => {
   try {
     const { name, description, price } = req.body;
-    const updatedFood = await Food.update({ name, description, price }, {
+    const updatedFood = await food.update({ name, description, price }, {
       where: { id: req.params.id },
       returning: true,
     });
@@ -54,7 +52,7 @@ router.put('/food/:id', async (req, res) => {
 
 router.delete('/food/:id', async (req, res) => {
   try {
-    const deletedRowsCount = await Food.destroy({ where: { id: req.params.id } });
+    const deletedRowsCount = await food.destroy({ where: { id: req.params.id } });
     if (deletedRowsCount === 0) {
       res.status(404).json({ error: 'Record not found' });
     } else {

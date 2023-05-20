@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "NODE_ENV=test jest --verbose --coverage --detectOpenHandles",
+    "test": "NODE_ENV=test jest --verbose --watchAll --coverage --detectOpenHandles",
     "test-watch": "NODE_ENV=test jest --watchAll --verbose --coverage",
     "init:config": "sequelize init:config",
     "db:create": "sequelize db:create"
@@ -19,12 +19,11 @@
   "bugs": {
     "url": "https://github.com/rkgallaway/example-server/issues"
   },
-  "homepage": "https://github.com/rkgallaway/example-server#readme",
   "dependencies": {
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
-    "eslint": "^8.40.0",
+    "eslint": "^8.41.0",
     "express": "^4.18.2",
     "jshint": "^2.13.6",
     "pg": "^8.11.0",

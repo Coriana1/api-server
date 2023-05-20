@@ -10,12 +10,12 @@ This very basic express server is used as a base for CI/CD deployment exercises
 
 ### Links and Resources
 
-- [GitHub Actions ci/cd](https://github.com/Coriana1/basic-express-server/actionss)
-- [back-end dev server url](https://github.com/Coriana1/basic-express-server/actions)
+- [GitHub Actions ci/cd](https://github.com/Coriana1/api-server/actions)
+- [back-end dev server url](https://api-server-4wh8.onrender.com)
 
 ### Collaborators
 
-Kenya Womack, Kao Sealor, Hayden Cooper
+Kenya Womack, Kao Sealor, Hayden Cooper, Donna
 
 ### Setup
 
@@ -38,4 +38,4 @@ to run tests, after running `npm i`, run the command `npm test`
 
 #### UML
 
-![UML image](lab3UML.png)
+![UML image](lab4UML.png)

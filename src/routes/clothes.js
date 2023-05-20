@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Clothes = require('../models/clothes');
+const { clothes } = require('../models');
+
 
 const app = express();
 app.use(express.json);
@@ -8,7 +9,7 @@ app.use(express.json);
 router.post('/clothes', async (req, res) => {
   try {
     const { name, size, color } = req.body;
-    const clothes = await Clothes.create({ name, size, color });
+    const clothes = await clothes.create({ name, size, color });
     res.status(201).json(clothes);
   } catch (error) {
     res.status(500).json({ error: 'Failed to create the record' });
@@ -17,7 +18,7 @@ router.post('/clothes', async (req, res) => {
 
 router.get('/clothes', async (req, res) => {
   try {
-    const clothes = await Clothes.findAll();
+    const clothes = await clothes.findAll();
     res.status(200).json(clothes);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch the records' });
@@ -26,7 +27,7 @@ router.get('/clothes', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const clothes = await Clothes.findByPk(req.params.id);
+    const clothes = await clothes.findByPk(req.params.id);
     if (clothes) {
       res.status(200).json(clothes);
     } else {
@@ -40,7 +41,7 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { name, size, color } = req.body;
-    const updatedClothes = await Clothes.update({ name, size, color }, {
+    const updatedClothes = await clothes.update({ name, size, color }, {
       where: { id: req.params.id },
       returning: true,
     });
@@ -56,7 +57,7 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    const deletedRowsCount = await Clothes.destroy({ where: { id: req.params.id } });
+    const deletedRowsCount = await clothes.destroy({ where: { id: req.params.id } });
     if (deletedRowsCount === 0) {
       res.status(404).json({ error: 'Record not found' });
     } else {
